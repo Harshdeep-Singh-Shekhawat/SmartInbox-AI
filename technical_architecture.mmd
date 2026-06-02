@@ -1,0 +1,31 @@
+sequenceDiagram
+    participant Client as Next.js Client (React)
+    participant NextAuth as NextAuth (Session)
+    participant Server as Next.js API Routes
+    participant DB as Prisma (SQLite)
+    participant Gmail as Google Gmail API
+    participant LLM as OpenAI GPT-4o-mini
+    
+    Client->>NextAuth: Request Session Token
+    NextAuth-->>Client: Returns Active Session
+    
+    Client->>Server: GET /api/emails
+    Server->>NextAuth: Validate Session & Get Access Token
+    
+    Server->>Gmail: Fetch latest unread emails (using token)
+    Gmail-->>Server: Returns raw email payload
+    
+    Server->>DB: Fetch Custom Filter Rules for User
+    DB-->>Server: Returns Rules (Keywords, Senders)
+    
+    loop For each email
+        Server->>Server: Apply Filter Rules
+        alt Requires AI Analysis
+            Server->>LLM: POST /api/analyze (Prompt: Sender, Subject, Snippet)
+            LLM-->>Server: JSON: { isImportant, category, summary }
+        end
+    end
+    
+    Server-->>Client: Return mapped & summarized EmailData[]
+    
+    Client->>Client: Render Glassmorphic UI Dashboard

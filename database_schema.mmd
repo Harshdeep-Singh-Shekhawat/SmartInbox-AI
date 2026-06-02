@@ -1,0 +1,17 @@
+erDiagram
+    USER ||--o{ ACCOUNT : has
+    USER ||--o{ SESSION : has
+    USER ||--o{ FILTER_RULE : creates
+    
+    USER {
+        string id
+        string name
+        string email
+    }
+    
+    FILTER_RULE {
+        string id
+        string type "Keyword or Sender"
+        string value "e.g. invoice"
+        string action "Always Important/Noise"
+    }

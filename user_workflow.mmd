@@ -1,0 +1,24 @@
+graph TD
+    Start([User Visits App]) --> AuthCheck{Is User Logged In?}
+    AuthCheck -- No --> Login[Google OAuth Login Page]
+    Login --> AuthCheck
+    
+    AuthCheck -- Yes --> Dashboard[SmartInbox Dashboard]
+    
+    Dashboard --> FetchData[Fetch Recent Emails]
+    FetchData --> FilterRules{Check Custom Filter Rules}
+    
+    FilterRules -- "Rule Matches 'Important'" --> MarkImportant[Mark Important immediately]
+    FilterRules -- "Rule Matches 'Noise'" --> MarkNoise[Discard/Hide]
+    FilterRules -- "No Rules Match" --> AIEngine[Send to AI Filtering Engine]
+    
+    AIEngine -- "AI says Important" --> GenerateSummary[Generate AI TL;DR Summary]
+    AIEngine -- "AI says Noise" --> MarkNoise
+    
+    MarkImportant --> GenerateSummary
+    
+    GenerateSummary --> DisplayList[Display in 'Important Digest' Feed]
+    
+    DisplayList --> UserAction{User Clicks Email}
+    UserAction -- "Read" --> ExpandCard[Expand Card & Read Summary]
+    UserAction -- "Action" --> ClickAction(Archive / Mark Read / Open in Gmail)
