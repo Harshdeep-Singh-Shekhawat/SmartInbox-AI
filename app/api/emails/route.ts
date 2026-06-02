@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { google } from 'googleapis';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'; 
+import { authOptions } from '@/lib/auth'; 
 
 export async function GET() {
   // In a real application, you would get the session and access token here:

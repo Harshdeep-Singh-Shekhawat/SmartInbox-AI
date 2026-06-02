@@ -1,7 +1,7 @@
 import { Sidebar } from '@/components/Sidebar';
 import { Dashboard } from '@/components/Dashboard';
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { LoginButton } from "@/components/LoginButton";
 import { Mail } from "lucide-react";
 
