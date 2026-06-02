@@ -5,7 +5,7 @@ import { authOptions } from '@/lib/auth';
 
 export async function GET() {
   // In a real application, you would get the session and access token here:
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions) as any;
   if (!session || !session.accessToken) return new NextResponse('Unauthorized', { status: 401 });
 
   const oauth2Client = new google.auth.OAuth2();
