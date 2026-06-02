@@ -24,6 +24,7 @@ export async function POST(req: Request) {
     try {
       // In a fully wired application with an OpenAI key, this code will run:
       const result = await generateObject({
+        // @ts-ignore - Bypassing strict type mismatch between ai and @ai-sdk/openai versions
         model: openai('gpt-4o-mini'),
         schema: z.object({
           isImportant: z.boolean().describe('Whether the email is important or noise based on urgency, action items, or direct personal/professional communication.'),
